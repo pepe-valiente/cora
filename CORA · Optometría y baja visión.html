@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CORA · Optometría y baja visión</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@200..800&family=Atkinson+Hyperlegible:wght@400&display=swap">
+<style>
+:root{--bg:#fff;--fg:#14202e;--muted:#46566a;--line:#b9c3cf;--card:#f1f4f8;--accent:#0b57d0;--onacc:#fff;--ok:#1a7f37;--warn:#8a5a00;--bad:#c4202e;
+--font:"Atkinson Hyperlegible Next","Atkinson Hyperlegible",system-ui,sans-serif;--w:300;--lh:1.6;--ls:0em;--ws:0em;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+:root[data-theme=dark]{--bg:#12161c;--fg:#e8ecf1;--muted:#aab6c4;--line:#3b4757;--card:#1c232c;--accent:#8ab8ff;--onacc:#0a1220;--ok:#5fd07f;--warn:#f0b64a;--bad:#ff7b84;color-scheme:dark}
+:root[data-theme=hcl]{--bg:#fff;--fg:#000;--muted:#000;--line:#000;--card:#fff;--accent:#0000c8;--onacc:#fff;--ok:#006400;--warn:#6b4200;--bad:#b00000}
+:root[data-theme=hcd]{--bg:#000;--fg:#fff;--muted:#fff;--line:#fff;--card:#000;--accent:#ffff00;--onacc:#000;--ok:#00ff66;--warn:#ffc400;--bad:#ff6b6b;color-scheme:dark}
+:root[data-theme=ynb]{--bg:#000;--fg:#ffe600;--muted:#ffe600;--line:#ffe600;--card:#000;--accent:#fff;--onacc:#000;--ok:#ffe600;--warn:#ffe600;--bad:#ffe600;color-scheme:dark}
+:root[data-theme=dim]{--bg:#2a2118;--fg:#e9d6b6;--muted:#c4b08f;--line:#5b4a37;--card:#352a1f;--accent:#f2ad62;--onacc:#241a10;--ok:#a8d27a;--warn:#f2c36b;--bad:#ef9a7a;color-scheme:dark}
+:root[data-theme=irlen]{--bg:#fff7c2;--fg:#1b2a4a;--muted:#3a4a6a;--line:#8e8a55;--card:#fdf0a0;--accent:#0b3d91;--onacc:#fff;--ok:#1b6b34;--warn:#7a4a00;--bad:#a3202b}
+:root[data-safe=on]{--ok:#009e73;--warn:#e69f00;--bad:#d55e00}
+:root[data-theme=light][data-safe=on],:root[data-theme=auto][data-safe=on]{--ok:#007a5a;--warn:#a86f00;--bad:#c24e00}
+html{font-size:100%;scroll-padding-top:1rem}
+*,*::before,*::after{box-sizing:border-box}
+body{font-weight:var(--w);margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);line-height:var(--lh);letter-spacing:var(--ls);word-spacing:var(--ws);display:grid;grid-template-columns:340px minmax(0,1fr);min-height:100vh}
+.skip{position:absolute;left:.5rem;top:-4rem;background:var(--accent);color:var(--onacc);padding:.6rem 1rem;z-index:100;border-radius:.4rem}
+.skip:focus{top:.5rem}
+a{color:var(--accent)}
+:root[data-links=on] a{text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:.12em}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+:root[data-focus=on] :focus-visible{outline:.35rem solid var(--accent);outline-offset:.2rem;box-shadow:0 0 0 .5rem var(--bg)}
+:root[data-motion=off] *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+:root[data-border=on] .card,:root[data-border=on] input,:root[data-border=on] select,:root[data-border=on] button,:root[data-border=on] table{border:2px solid var(--fg)!important}
+/* Panel */
+#panel{--w:400;font-size:16px;line-height:1.5;letter-spacing:0;word-spacing:0;background:var(--card);border-right:1px solid var(--line);position:sticky;top:0;height:100vh;height:100dvh;overflow:auto;padding:0}
+#panel summary{font-weight:var(--w);font-size:1.15em;padding:1em 1.1em;cursor:pointer;list-style:none;border-bottom:1px solid var(--line)}
+#panel summary::-webkit-details-marker{display:none}
+#panel .in{padding:.8em 1.1em 2em}
+#panel fieldset{border:0;border-top:1px solid var(--line);margin:1em 0 0;padding:.8em 0 0}
+#panel legend{font-weight:var(--w);padding:0 .4em 0 0}
+.row{margin:.7em 0}
+.row label{display:flex;justify-content:space-between;gap:.5em;font-weight:var(--w)}
+.row output{font-variant-numeric:tabular-nums;color:var(--muted)}
+input[type=range]{width:100%;height:2em;accent-color:var(--accent)}
+select,input[type=text],input[type=email]{width:100%;font:inherit;padding:.55em .6em;border:1px solid var(--line);border-radius:.15em;background-color:var(--bg);color:var(--fg)}
+.sel{position:relative;display:block}
+.sel select{-webkit-appearance:none;appearance:none;padding-right:3em}
+.sel::after{content:"";position:absolute;right:1.2em;top:50%;width:.5em;height:.5em;border-right:max(1.5px,.07em) solid var(--fg);border-bottom:max(1.5px,.07em) solid var(--fg);transform:translateY(-72%) rotate(45deg);pointer-events:none}
+.chk{display:flex;align-items:center;gap:.6em;margin:.55em 0;font-weight:var(--w)}
+.chk input{width:1.3em;height:1.3em;accent-color:var(--accent)}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:.5em}
+button,.btn{font:inherit;font-weight:var(--w);padding:.6em .7em;border-radius:.4em;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer;text-align:left}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);color:var(--onacc);border-color:var(--accent);text-align:center}
+.hint{color:var(--muted);font-size:.875em;margin:.3em 0 0}
+#live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+#panel summary{display:flex;justify-content:space-between;align-items:center}
+#panel summary::after{content:"";width:.5em;height:.5em;border-right:1.5px solid var(--fg);border-bottom:1.5px solid var(--fg);transform:rotate(45deg);margin-right:.3em;transition:transform .2s}
+#panel[open] summary::after{transform:rotate(225deg)}
+@media (min-width:901px){#panel summary::after{display:none}}
+/* Contenido */
+:root{--u:calc(var(--lh)*1rem);--measure:40em;--rule:color-mix(in srgb,var(--fg) 22%,var(--bg));--ph:color-mix(in srgb,var(--fg) 10%,var(--bg))}
+:root[data-theme=hcl],:root[data-theme=hcd],:root[data-theme=ynb]{--rule:var(--fg)}
+:root[data-width=wide]{--measure:60em}
+main{container-type:inline-size;container-name:page;padding:calc(var(--u)*1.5) clamp(1rem,5vw,4rem) calc(var(--u)*4);max-width:80rem;text-align:left;hyphens:auto;overflow-wrap:break-word}
+p,li{max-width:var(--measure)}
+p{margin:0 0 var(--u)}
+h1,h2,h3{margin:0;line-height:1.12;font-weight:var(--w)}
+h1{font-size:clamp(2.6rem,9cqi,5.5rem);line-height:1.04;max-width:12em;padding:calc(var(--u)*3) 0 calc(var(--u)*2)}
+h2{font-size:1.75rem}
+h3{font-size:1.25rem;margin-bottom:calc(var(--u)*.4)}
+.lead{font-size:1.5rem;line-height:1.35}
+.sub{color:var(--muted);font-size:.9375rem;font-weight:calc(var(--w) + 100)}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:var(--u) calc(var(--u)*2);padding-bottom:var(--u);border-bottom:1px solid var(--rule)}
+.brand{margin:0;font-size:1.5rem;letter-spacing:.14em}
+.brand .sub{letter-spacing:var(--ls);margin-left:1.2em}
+.top ul{display:flex;flex-wrap:wrap;gap:0 calc(var(--u)*1.5);list-style:none;margin:0;padding:0}
+.ar{width:1.5em;height:.75em;vertical-align:middle;margin-left:.6em;flex:none}
+.sec{border-top:1px solid var(--rule);padding-top:var(--u);margin-top:calc(var(--u)*3);display:grid;grid-template-columns:minmax(0,1fr);gap:var(--u) calc(var(--u)*2)}
+.sec>.body{min-width:0}
+@container page (min-width:52em){.sec{grid-template-columns:minmax(0,1fr) minmax(0,3fr)}.sec.nolab>.body{grid-column:2}.person{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14em),1fr));gap:calc(var(--u)*1.5) calc(var(--u)*2)}
+.cols>div{border-top:1px solid var(--rule);padding-top:calc(var(--u)*.6)}
+.cols p{margin:0}
+.fig{margin:0}
+.ph{max-height:22rem;background:var(--ph);border:1px solid var(--rule);aspect-ratio:var(--r,4/3);width:100%}
+.fig figcaption{color:var(--muted);font-size:.875rem;font-weight:calc(var(--w) + 100);margin-top:calc(var(--u)*.4)}
+.cols .fig{margin-bottom:calc(var(--u)*.8)}
+.person{display:grid;grid-template-columns:minmax(0,1fr);gap:calc(var(--u)*1.5) calc(var(--u)*2);margin-bottom:calc(var(--u)*3)}
+.name{font-size:2.25rem;line-height:1.1}
+.role{color:var(--muted);margin:calc(var(--u)*.3) 0 var(--u)}
+.sec h3.mid{margin-bottom:calc(var(--u)*1.2)}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:0}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:2.5em minmax(0,1fr);border-top:1px solid var(--rule);padding:calc(var(--u)*.6) 0}
+ol.steps li::before{content:counter(s);color:var(--muted)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;border:1px solid var(--rule);min-width:30em;font-size:1rem}
+thead th{background:var(--ph);color:var(--fg);border-bottom:1px solid var(--fg);font-weight:calc(var(--w) + 100)}
+th,td{border:0;border-bottom:1px solid var(--rule);padding:calc(var(--u)*.6) 1em;vertical-align:top;text-align:left}
+tbody th{color:var(--fg);font-weight:calc(var(--w) + 100)}
+tbody tr:nth-child(even){background:color-mix(in srgb,var(--fg) 4%,var(--bg))}
+tbody tr:last-child>*{border-bottom:0}
+caption{text-align:left;color:var(--muted);font-size:.875rem;font-weight:calc(var(--w) + 100);padding-bottom:calc(var(--u)*.5)}
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,8em),1fr));gap:.5rem}
+.chip{padding:calc(var(--u)*1.2) .8em;color:#000;border:1px solid rgba(0,0,0,.35)}
+form{display:grid;gap:var(--u);max-width:var(--measure)}
+form label{display:block;margin-bottom:.3em}
+form p{margin:.3em 0 0}
+button.primary{display:inline-flex;align-items:center;justify-content:center}
+.hint{color:var(--muted);font-size:.875em;font-weight:calc(var(--w) + 100)}
+.note{color:var(--muted);font-size:.875rem;font-weight:calc(var(--w) + 100);margin:calc(var(--u)*3) 0 0;border-top:1px solid var(--rule);padding-top:var(--u)}
+/* Regla de lectura */
+#ruler{position:fixed;left:0;right:0;height:3.2em;top:40vh;pointer-events:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.62);display:none;z-index:50}
+:root[data-ruler=on] #ruler{display:block}
+@media (max-width:900px){body{grid-template-columns:1fr}#panel{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><filter id="cb" color-interpolation-filters="sRGB"><feColorMatrix id="cbm" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"/></filter></svg>
+<div id="ruler" aria-hidden="true"></div>
+<div id="live" role="status" aria-live="polite"></div>
+
+<details id="panel" open>
+<summary>Ajustes de visión</summary>
+<div class="in">
+<p class="hint" style="margin-top:0">Los cambios se aplican al instante y se guardan en este navegador.</p>
+
+<fieldset><legend>Perfiles rápidos</legend>
+<div class="btns" role="group" aria-label="Perfiles rápidos">
+<button type="button" data-p="baja">Baja visión</button>
+<button type="button" data-p="macular">Degeneración macular</button>
+<button type="button" data-p="cataratas">Cataratas</button>
+<button type="button" data-p="foto">Fotofobia</button>
+<button type="button" data-p="dislexia">Dislexia</button>
+<button type="button" data-p="prot">Protanopía</button>
+<button type="button" data-p="deut">Deuteranopía</button>
+<button type="button" data-p="trit">Tritanopía</button>
+</div></fieldset>
+
+<fieldset><legend>Texto</legend>
+<div class="row"><label for="size">Tamaño de letra <output for="size"></output></label><input type="range" id="size" data-k="size" min="80" max="250" step="5"></div>
+<div class="row"><label for="line">Interlineado <output for="line"></output></label><input type="range" id="line" data-k="line" min="1.2" max="2.4" step="0.1"></div>
+<div class="row"><label for="ls">Espacio entre letras <output for="ls"></output></label><input type="range" id="ls" data-k="ls" min="0" max="0.25" step="0.01"></div>
+<div class="row"><label for="ws">Espacio entre palabras <output for="ws"></output></label><input type="range" id="ws" data-k="ws" min="0" max="0.6" step="0.05"></div>
+<div class="row"><label for="w">Grosor de la letra <output for="w"></output></label><input type="range" id="w" data-k="w" min="200" max="700" step="50"></div>
+<div class="row"><label for="width">Ancho del texto</label>
+<span class="sel"><select id="width" data-k="width"><option value="narrow">Columna estrecha</option><option value="wide">Columna ancha</option></select></span></div>
+</fieldset>
+
+<fieldset><legend>Contraste y luz</legend>
+<div class="row"><label for="theme">Tema de color</label>
+<span class="sel"><select id="theme" data-k="theme"><option value="light">Claro</option><option value="auto">Automático (sistema)</option><option value="dark">Oscuro</option><option value="hcl">Alto contraste claro</option><option value="hcd">Alto contraste oscuro</option><option value="ynb">Amarillo sobre negro</option><option value="dim">Luz tenue (fotofobia)</option><option value="irlen">Azul sobre amarillo pálido</option></select></span></div>
+<div class="row"><label for="contrast">Contraste <output for="contrast"></output></label><input type="range" id="contrast" data-k="contrast" min="70" max="200" step="5"></div>
+<div class="row"><label for="bright">Brillo <output for="bright"></output></label><input type="range" id="bright" data-k="bright" min="50" max="150" step="5"></div>
+<div class="row"><label for="sat">Saturación <output for="sat"></output></label><input type="range" id="sat" data-k="sat" min="0" max="200" step="5"></div>
+</fieldset>
+
+<fieldset><legend>Daltonismo</legend>
+<div class="row"><label for="cb">Tipo</label>
+<span class="sel"><select id="cb" data-k="cb"><option value="none">Ninguno</option><option value="prot">Protanopía (rojo)</option><option value="deut">Deuteranopía (verde)</option><option value="trit">Tritanopía (azul)</option><option value="acro">Acromatopsia (sin color)</option></select></span></div>
+<div class="row"><label for="cbmode">Modo</label>
+<span class="sel"><select id="cbmode" data-k="cbmode"><option value="fix">Corregir colores</option><option value="sim">Simular (para diseñadores)</option></select></span></div>
+<div class="row"><label for="cbint">Intensidad <output for="cbint"></output></label><input type="range" id="cbint" data-k="cbint" min="0" max="100" step="5"></div>
+<label class="chk"><input type="checkbox" data-k="safe"> Paleta segura para daltónicos</label>
+</fieldset>
+
+<fieldset><legend>Ayudas de lectura y navegación</legend>
+<label class="chk"><input type="checkbox" data-k="links"> Subrayar siempre los enlaces</label>
+<label class="chk"><input type="checkbox" data-k="border"> Bordes marcados en controles</label>
+<label class="chk"><input type="checkbox" data-k="focus"> Foco de teclado grande</label>
+<label class="chk"><input type="checkbox" data-k="motion"> Reducir animaciones</label>
+<label class="chk"><input type="checkbox" data-k="ruler"> Regla de lectura (sigue al ratón o dedo)</label>
+</fieldset>
+
+<p style="margin-top:1.2rem"><button type="button" class="primary" id="reset" style="width:100%">Restablecer todo</button></p>
+</div>
+</details>
+
+<main id="main" tabindex="-1">
+<header class="top">
+<p class="brand">CORA <span class="sub">Optometría y baja visión</span></p>
+<nav aria-label="Principal"><ul><li><a href="#servicios">Servicios</a></li><li><a href="#personas">Personas</a></li><li><a href="#proceso">Cómo trabajamos</a></li><li><a href="#ayudas">Ayudas</a></li><li><a href="#cita">Pedir cita</a></li></ul></nav>
+</header>
+
+<h1>Ver mejor con la visión que tienes</h1>
+<div class="sec nolab"><div class="body">
+<p class="lead">Evaluamos cómo usas tu vista en el día a día y buscamos las ayudas, el entrenamiento y los cambios en tu entorno que te devuelvan autonomía.</p>
+<p>CORA es una consulta de optometría especializada en baja visión. Esta web se adapta a ti: abre el panel de «Ajustes de visión» para cambiar el tamaño de letra, el contraste o los colores.</p>
+<p><a href="#cita">Pedir cita<svg class="ar" viewBox="0 0 24 12" aria-hidden="true" focusable="false"><path d="M0 6h22M17 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></a></p>
+</div></div>
+<figure class="fig" style="margin-top:calc(var(--u)*2)"><div class="ph" style="--r:3/1" aria-hidden="true"></div><figcaption>La consulta de CORA</figcaption></figure>
+
+<section class="sec"><h2 id="servicios">Servicios</h2><div class="body"><div class="cols">
+<div><h3>Valoración funcional</h3><p>Medimos agudeza, campo visual, sensibilidad al contraste y deslumbramiento, y lo relacionamos con tus tareas reales.</p></div>
+<div><h3>Ayudas ópticas</h3><p>Probamos lupas, telescopios, gafas con alta adición y filtros selectivos hasta dar con lo que mejor te funciona.</p></div>
+<div><h3>Ayudas electrónicas</h3><p>Magnificadores portátiles, lupas de sobremesa y software de ampliación y lectura en voz alta.</p></div>
+<div><h3>Entrenamiento visual</h3><p>Aprendes a usar tu visión restante y tus ayudas con eficacia: lectura, fijación excéntrica y orientación.</p></div>
+<div><h3>Iluminación y entorno</h3><p>Recomendaciones para casa y trabajo: luz, contrastes, señalización y control del deslumbramiento.</p></div>
+<div><h3>Infancia y mayores</h3><p>Adaptaciones para el aula, el estudio y la vida diaria, con orientación a familias y cuidadores.</p></div>
+</div></div></section>
+
+<section class="sec"><h2 id="personas">Las personas de CORA</h2><div class="body">
+<div class="person">
+<figure class="fig"><div class="ph" style="--r:1/1" aria-hidden="true"></div><figcaption>Beatriz Palacios, optometrista</figcaption></figure>
+<div>
+<h3 class="name">Beatriz Palacios</h3>
+<p class="role">Optometrista especializada en baja visión</p>
+<p class="lead">Su punto de partida no es lo que has perdido, sino lo que quieres seguir haciendo.</p>
+<p>Beatriz acompaña a cada persona durante todo el proceso, desde la primera conversación hasta el seguimiento. Prueba las ayudas en situaciones reales, enseña a usarlas y, cuando hace falta, habla con la familia, el colegio o el centro de trabajo.</p>
+<p><a href="#cita">Pedir cita con Beatriz<svg class="ar" viewBox="0 0 24 12" aria-hidden="true" focusable="false"><path d="M0 6h22M17 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></a></p>
+</div></div>
+<h3 class="mid">A quién acompañamos</h3>
+<div class="cols">
+<div><figure class="fig"><div class="ph" style="--r:2/1" aria-hidden="true"></div></figure><h3>Personas mayores</h3><p>Para seguir leyendo, cocinando y moviéndose con seguridad en casa.</p></div>
+<div><figure class="fig"><div class="ph" style="--r:2/1" aria-hidden="true"></div></figure><h3>Adultos en activo</h3><p>Para mantener el trabajo y usar pantallas y documentos con comodidad.</p></div>
+<div><figure class="fig"><div class="ph" style="--r:2/1" aria-hidden="true"></div></figure><h3>Infancia y juventud</h3><p>Para participar en clase y estudiar con los apoyos adecuados.</p></div>
+</div></div></section>
+
+<section class="sec"><h2>Situaciones que atendemos</h2><div class="body">
+<p>Trabajamos con personas con degeneración macular, glaucoma, retinopatía diabética, retinosis pigmentaria, cataratas, nistagmo, hemianopsia u otras pérdidas de visión que no se corrigen del todo con gafas, lentillas o cirugía.</p>
+</div></section>
+
+<section class="sec"><h2 id="proceso">Cómo trabajamos</h2><div class="body"><ol class="steps">
+<li><span>Entrevista. Hablamos de tu historia, tus dificultades y qué quieres volver a hacer.</span></li>
+<li><span>Valoración funcional. Exploramos tu visión y cómo la usas en tareas concretas.</span></li>
+<li><span>Prueba de ayudas. Pruebas distintas soluciones, sin compromiso, en situaciones cotidianas.</span></li>
+<li><span>Entrenamiento. Practicamos con las ayudas elegidas hasta que te resulten cómodas.</span></li>
+<li><span>Seguimiento. Revisamos cómo te va y ajustamos lo necesario.</span></li>
+</ol></div></section>
+
+<section class="sec"><h2 id="ayudas">Ayudas según lo que necesitas</h2><div class="body"><div class="tw"><table>
+<caption>Ejemplos orientativos; la ayuda adecuada se decide tras la valoración.</caption>
+<thead><tr><th scope="col">Quiero…</th><th scope="col">Posible ayuda</th></tr></thead>
+<tbody>
+<tr><th scope="row">Leer libros y etiquetas</th><td>Lupa de mano, lupa con luz o gafas de alta adición</td></tr>
+<tr><th scope="row">Leer cartas, facturas o recetas</th><td>Lupa de sobremesa o magnificador portátil</td></tr>
+<tr><th scope="row">Ver carteles y pizarra</th><td>Telescopio monocular o ayudas de distancia</td></tr>
+<tr><th scope="row">Reducir deslumbramiento</th><td>Filtros selectivos y gorra o visera</td></tr>
+<tr><th scope="row">Usar móvil y ordenador</th><td>Ampliación de pantalla, alto contraste y lectura en voz alta</td></tr>
+</tbody></table></div></div></section>
+
+<section class="sec"><h2>Tu experiencia en esta web</h2><div class="body">
+<p>Los estados y mensajes de esta página nunca dependen solo del color. Si tienes daltonismo, elige tu tipo en el panel y comprueba el efecto en esta prueba:</p>
+<div class="chips" role="list">
+<div class="chip" role="listitem" style="background:#e32636">Rojo</div>
+<div class="chip" role="listitem" style="background:#2ca02c">Verde</div>
+<div class="chip" role="listitem" style="background:#1f77d4">Azul</div>
+<div class="chip" role="listitem" style="background:#ffd400">Amarillo</div>
+<div class="chip" role="listitem" style="background:#ff8c00">Naranja</div>
+<div class="chip" role="listitem" style="background:#9b59b6">Violeta</div>
+</div></div></section>
+
+<section class="sec"><h2 id="cita">Pedir cita</h2><div class="body">
+<p class="lead">Cuéntanos qué te gustaría mejorar y te responderemos para concretar el día y la hora.</p>
+<form onsubmit="return false" novalidate>
+<div><label for="n">Nombre completo</label><input type="text" id="n" autocomplete="name"></div>
+<div><label for="e">Correo electrónico</label><input type="email" id="e" autocomplete="email" aria-describedby="eh"><p class="hint" id="eh">Solo lo usaremos para responderte.</p></div>
+<div><label for="m">Motivo de la consulta</label><span class="sel"><select id="m"><option>Primera valoración de baja visión</option><option>Probar ayudas ópticas o electrónicas</option><option>Entrenamiento visual</option><option>Revisión de seguimiento</option><option>Otro</option></select></span></div>
+<div><label for="t">¿Qué te gustaría volver a hacer?</label><input type="text" id="t"></div>
+<div><button type="button" class="primary" id="send">Solicitar cita<svg class="ar" viewBox="0 0 24 12" aria-hidden="true" focusable="false"><path d="M0 6h22M17 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></button></div>
+</form></div></section>
+
+<p class="note">La información de esta web es orientativa y no sustituye a una valoración profesional. Si has perdido visión de forma repentina, acude a urgencias oftalmológicas.</p>
+</main>
+
+<script>
+(function(){
+var D={w:300,size:100,line:1.6,ls:0,ws:0,font:'atk',width:'narrow',theme:'light',contrast:100,bright:100,sat:100,cb:'none',cbmode:'fix',cbint:100,safe:false,links:false,border:false,focus:false,motion:false,ruler:false};
+var P={
+baja:{w:450,size:160,line:1.9,ls:.05,theme:'hcl',contrast:110,links:true,border:true,focus:true,width:'narrow'},
+macular:{w:500,size:220,line:2,ls:.08,ws:.2,theme:'hcd',links:true,focus:true,border:true},
+cataratas:{w:450,size:150,line:1.8,theme:'hcd',contrast:130,bright:90,links:true},
+foto:{size:120,theme:'dim',bright:80,contrast:95,motion:true},
+dislexia:{size:125,line:2,ls:.1,ws:.25,theme:'irlen',width:'narrow',ruler:true},
+prot:{cb:'prot',cbmode:'fix',cbint:100,safe:true,links:true},
+deut:{cb:'deut',cbmode:'fix',cbint:100,safe:true,links:true},
+trit:{cb:'trit',cbmode:'fix',cbint:100,safe:true,links:true}};
+var names={baja:'Baja visión',macular:'Degeneración macular',cataratas:'Cataratas',foto:'Fotofobia',dislexia:'Dislexia',prot:'Protanopía',deut:'Deuteranopía',trit:'Tritanopía'};
+var F={atk:'"Atkinson Hyperlegible Next","Atkinson Hyperlegible",system-ui,sans-serif'};
+var S={prot:[[.152286,1.052583,-.204868],[.114503,.786281,.099216],[-.003882,-.048116,1.051998]],
+deut:[[.367322,.860646,-.227968],[.280085,.672501,.047413],[-.01182,.04294,.968881]],
+trit:[[1.255528,-.076749,-.178779],[-.078411,.930809,.147602],[.004733,.691367,.3039]]};
+var C={prot:[[0,0,0],[.7,1,0],[.7,0,1]],deut:[[0,0,0],[.7,1,0],[.7,0,1]],trit:[[1,0,.7],[0,1,.7],[0,0,0]]};
+var I=[[1,0,0],[0,1,0],[0,0,1]];
+var st=JSON.parse(JSON.stringify(D)),root=document.documentElement,main=document.getElementById('main'),live=document.getElementById('live');
+try{var s=JSON.parse(localStorage.getItem('vision-prefs-v2')||'null');if(s)for(var k in D)if(k in s)st[k]=s[k]}catch(e){}
+
+function mul(a,b){return a.map(function(r,i){return [0,1,2].map(function(j){return r[0]*b[0][j]+r[1]*b[1][j]+r[2]*b[2][j]})})}
+function matrix(){
+ var t=st.cbint/100,M=I;
+ if(st.cb==='acro'){var g=[.2126,.7152,.0722];M=I.map(function(r,i){return [0,1,2].map(function(j){return (1-t)*r[j]+t*g[j]})})}
+ else if(S[st.cb]){var E=I.map(function(r,i){return r.map(function(v,j){return v-S[st.cb][i][j]})});
+  if(st.cbmode==='fix'){var CE=mul(C[st.cb],E);M=I.map(function(r,i){return r.map(function(v,j){return v+t*CE[i][j]})})}
+  else{M=I.map(function(r,i){return r.map(function(v,j){return v-t*E[i][j]})})}}
+ return M.map(function(r){return r.join(' ')+' 0 0'}).concat(['0 0 0 1 0']).join(' ')}
+
+function fmt(k,v){if(k==='w')return ''+v;if(k==='size'||k==='contrast'||k==='bright'||k==='sat'||k==='cbint')return v+' %';if(k==='ls'||k==='ws')return (+v).toFixed(2)+' em';return (+v).toFixed(1)}
+function apply(){
+ root.style.fontSize=st.size+'%';root.style.setProperty('--w',st.w);
+ root.style.setProperty('--lh',st.line);root.style.setProperty('--ls',st.ls+'em');root.style.setProperty('--ws',st.ws+'em');
+ root.style.setProperty('--font',F.atk);
+ var th=st.theme;if(th==='auto')th=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+ root.dataset.theme=th;root.dataset.safe=st.safe?'on':'off';root.dataset.links=st.links?'on':'off';root.dataset.focus=st.focus?'on':'off';
+ root.dataset.border=st.border?'on':'off';root.dataset.motion=st.motion?'off':'on';root.dataset.ruler=st.ruler?'on':'off';root.dataset.width=st.width==='wide'?'wide':'narrow';
+ document.getElementById('cbm').setAttribute('values',matrix());
+ main.style.filter=(st.cb==='none'?'':'url(#cb) ')+'contrast('+st.contrast+'%) brightness('+st.bright+'%) saturate('+st.sat+'%)';
+ document.querySelectorAll('[data-k]').forEach(function(el){var k=el.dataset.k;
+  if(el.type==='checkbox')el.checked=!!st[k];else el.value=st[k];
+  if(el.type==='range'){var o=el.parentNode.querySelector('output');if(o)o.textContent=fmt(k,st[k])}});
+ try{localStorage.setItem('vision-prefs-v2',JSON.stringify(st))}catch(e){}}
+function say(m){live.textContent='';setTimeout(function(){live.textContent=m},50)}
+
+document.querySelectorAll('[data-k]').forEach(function(el){
+ el.addEventListener(el.type==='range'||el.type==='checkbox'?'input':'change',function(){
+  var k=el.dataset.k;st[k]=el.type==='checkbox'?el.checked:(el.type==='range'?parseFloat(el.value):el.value);apply()})});
+document.querySelectorAll('[data-p]').forEach(function(b){b.addEventListener('click',function(){
+ st=Object.assign(JSON.parse(JSON.stringify(D)),P[b.dataset.p]);apply();say('Perfil aplicado: '+names[b.dataset.p])})});
+document.getElementById('reset').addEventListener('click',function(){st=JSON.parse(JSON.stringify(D));apply();say('Ajustes restablecidos')});
+document.getElementById('send').addEventListener('click',function(){say('Formulario de demostración: aún no se envía ningún dato')});
+var ruler=document.getElementById('ruler');
+function mv(y){ruler.style.top=(y-ruler.offsetHeight/2)+'px'}
+addEventListener('mousemove',function(e){if(st.ruler)mv(e.clientY)});
+addEventListener('touchmove',function(e){if(st.ruler&&e.touches[0])mv(e.touches[0].clientY)},{passive:true});
+var panel=document.getElementById('panel');
+if(!matchMedia('(min-width:901px)').matches)panel.removeAttribute('open');
+else panel.addEventListener('toggle',function(){if(!panel.open)panel.open=true});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){if(st.theme==='auto')apply()});
+apply();
+})();
+</script>
+</body>
+</html>
